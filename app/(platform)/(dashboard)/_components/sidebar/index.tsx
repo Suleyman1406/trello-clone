@@ -1,18 +1,17 @@
 "use client";
+
 import React from "react";
 import { Plus } from "lucide-react";
+import { useLocalStorage } from "usehooks-ts";
 import Link from "next/link";
 
 import { useOrganization, useOrganizationList } from "@clerk/nextjs";
 
 import { Accordion } from "@/components/ui/accordion";
-import { Separator } from "@/components/ui/separator";
 import { Skeleton } from "@/components/ui/skeleton";
-import { useLocalStorage } from "usehooks-ts";
-import { organizations } from "@clerk/nextjs/api";
 import { Button } from "@/components/ui/button";
-import NavItem from "../nav-item";
 import { Organization } from "@/types";
+import NavItem from "../nav-item";
 
 interface ISidebarProps {
   storageKey?: string;
