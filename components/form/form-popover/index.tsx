@@ -12,6 +12,7 @@ import FormInput from "../form-input";
 import FormSubmit from "../form-submit";
 import { useAction } from "@/hooks/use-action";
 import { createBoard } from "@/actions/create-board";
+import { toast } from "sonner";
 
 interface IFormPopoverProps {
   children: React.ReactNode;
@@ -29,9 +30,10 @@ const FormPopover = ({
   const { execute, fieldErrors } = useAction(createBoard, {
     onSuccess: (data) => {
       console.log(data);
+      toast.success("Board Created!");
     },
     onError: (error) => {
-      console.log(error);
+      toast.error(error);
     },
   });
 
