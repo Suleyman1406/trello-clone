@@ -1,3 +1,4 @@
+import { copyList } from "@/actions/copy-list";
 import { deleteList } from "@/actions/delete-list";
 import FormSubmit from "@/components/form/form-submit";
 import { Button } from "@/components/ui/button";
@@ -9,7 +10,7 @@ import {
 } from "@/components/ui/popover";
 import { Separator } from "@/components/ui/separator";
 import { useAction } from "@/hooks/use-action";
-import { Card, List } from "@prisma/client";
+import { List } from "@prisma/client";
 import { MoreHorizontal, X } from "lucide-react";
 import React, { ElementRef, useRef } from "react";
 import { toast } from "sonner";
@@ -20,6 +21,15 @@ interface IListOptionsProps {
 }
 const ListOptions = ({ onAddCard, data }: IListOptionsProps) => {
   const closePopoverRef = useRef<ElementRef<"button">>(null);
+  const { execute: executeCopy } = useAction(copyList, {
+    onSuccess: (list) => {
+      toast.success(`List "${list.title}" copied!`);
+      closePopoverRef.current?.click();
+    },
+    onError: (error) => {
+      toast.error(error);
+    },
+  });
   const { execute: executeDelete } = useAction(deleteList, {
     onSuccess: (list) => {
       toast.success(`List "${list.title}" deleted!`);
@@ -32,6 +42,10 @@ const ListOptions = ({ onAddCard, data }: IListOptionsProps) => {
 
   const onListDeleteFormSubmit = () => {
     executeDelete({ id: data.id });
+  };
+
+  const onListCopyFormSubmit = () => {
+    executeCopy({ id: data.id });
   };
   return (
     <Popover>
@@ -60,9 +74,7 @@ const ListOptions = ({ onAddCard, data }: IListOptionsProps) => {
         >
           Add card...
         </Button>
-        <form>
-          <input hidden name="id" id="id" value={data.id} />
-          <input hidden name="boardId" id="boardId" value={data.boardId} />
+        <form action={onListCopyFormSubmit}>
           <FormSubmit
             variant="ghost"
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
@@ -72,7 +84,6 @@ const ListOptions = ({ onAddCard, data }: IListOptionsProps) => {
         </form>
         <Separator />
         <form action={onListDeleteFormSubmit}>
-          <input hidden name="id" id="id" value={data.id} />
           <FormSubmit
             variant="ghost"
             className="rounded-none w-full h-auto p-2 px-5 justify-start font-normal text-sm"
