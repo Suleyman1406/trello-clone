@@ -1,3 +1,5 @@
+import { Card, List } from "@prisma/client";
+
 export type Organization = {
   id: string;
   slug: string;
@@ -14,3 +16,7 @@ export type ActionState<TInput, TOutput> = {
   error?: string | null;
   data?: TOutput;
 };
+
+export type ListWithCards = List & { cards: Card[] };
+
+export type CardWithList = Card & { list: List };

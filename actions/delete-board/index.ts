@@ -28,7 +28,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     });
   } catch (error) {
     return {
-      error: "Server error.",
+      error: "Failed to delete board.",
     };
   }
   revalidatePath(`/organization/${orgId}`);

@@ -30,7 +30,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
     });
   } catch (error) {
     return {
-      error: "Server error.",
+      error: "Failed to update board.",
     };
   }
   revalidatePath(`/board/${board.id}`);
