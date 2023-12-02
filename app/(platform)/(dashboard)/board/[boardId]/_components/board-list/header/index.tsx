@@ -6,6 +6,7 @@ import { useEventListener } from "usehooks-ts";
 import FormInput from "@/components/form/form-input";
 import { updateList } from "@/actions/update-list";
 import { useAction } from "@/hooks/use-action";
+import ListOptions from "../options";
 
 interface IListHeaderProps {
   data: List;
@@ -79,6 +80,7 @@ const ListHeader = ({ data }: IListHeaderProps) => {
           {title}
         </div>
       )}
+      <ListOptions onAddCard={() => {}} data={data} />
     </div>
   );
 };
