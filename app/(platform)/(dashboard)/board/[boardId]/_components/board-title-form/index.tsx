@@ -8,6 +8,7 @@ import { Board } from "@prisma/client";
 import { error } from "console";
 import React, { ElementRef, useRef, useState } from "react";
 import { toast } from "sonner";
+import { useEventListener } from "usehooks-ts";
 
 interface IBoardTitleFormProps {
   data: Board;
@@ -30,19 +31,29 @@ const BoardTitleForm = ({ data }: IBoardTitleFormProps) => {
   const enableEditing = () => {
     setTimeout(() => {
       inputRef.current?.focus();
-      inputRef.current?.select();
     });
     setEditing(true);
   };
 
   const onSubmit = (formData: FormData) => {
     const title = formData.get("title") as string;
+    if (title === data.title) {
+      return disableEditing();
+    }
     execute({ title, id: data.id });
   };
 
   const onBlur = () => {
     formRef.current?.requestSubmit();
   };
+
+  const onKeyDown = (e: KeyboardEvent) => {
+    if (e.key === "Escape") {
+      disableEditing();
+    }
+  };
+
+  useEventListener("keydown", onKeyDown);
 
   if (isEditing) {
     return (
