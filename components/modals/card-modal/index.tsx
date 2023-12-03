@@ -9,12 +9,18 @@ import React from "react";
 import CardModalHeader from "./header";
 import CardModalDescription from "./description";
 import CardModalActions from "./actions";
+import { AuditLog } from "@prisma/client";
+import CardModalActivity from "./activity";
 
 const CardModal = () => {
   const { isOpen, onClose, id } = useCardModal();
   const { data: cardData } = useQuery<CardWithList>({
     queryKey: ["card", id],
     queryFn: () => fetcher(`/api/cards/${id}`),
+  });
+  const { data: auditLogsData } = useQuery<AuditLog[]>({
+    queryKey: ["card-logs", id],
+    queryFn: () => fetcher(`/api/cards/${id}/logs`),
   });
 
   return (
@@ -33,6 +39,11 @@ const CardModal = () => {
               ) : (
                 <CardModalDescription.Skeleton />
               )}
+              {auditLogsData ? (
+                <CardModalActivity items={auditLogsData} />
+              ) : (
+                <CardModalActivity.Skeleton />
+              )}
             </div>
           </div>
           {cardData ? (
@@ -40,6 +51,7 @@ const CardModal = () => {
           ) : (
             <CardModalActions.Skeleton />
           )}
+          {}
         </div>
       </DialogContent>
     </Dialog>
