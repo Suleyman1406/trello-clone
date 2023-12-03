@@ -61,7 +61,7 @@ const CardModalActions = ({ data }: ICardModalActionsProps) => {
       <Button
         variant={"gray"}
         onClick={onDelete}
-        disabled={isCardDeleteLoading || isCardDeleteLoading}
+        disabled={isCardDeleteLoading || isCardCopyLoading}
         className="w-full justify-start"
         size="inline"
       >

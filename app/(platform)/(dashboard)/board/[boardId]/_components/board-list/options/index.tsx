@@ -41,7 +41,10 @@ const ListOptions = ({ onAddCard, data }: IListOptionsProps) => {
   });
 
   const onListDeleteFormSubmit = () => {
-    executeDelete({ id: data.id });
+    const promise = executeDelete({ id: data.id });
+    toast.promise(promise, {
+      loading: "Delete list loading...",
+    });
   };
 
   const onListCopyFormSubmit = () => {

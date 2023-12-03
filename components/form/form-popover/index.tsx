@@ -47,7 +47,10 @@ const FormPopover = ({
       const title = formData.get("title") as string;
       const image = formData.get("image") as string;
 
-      execute({ title, image });
+      const promise = execute({ title, image });
+      toast.promise(promise, {
+        loading: "Create board loading...",
+      });
     },
     [execute]
   );

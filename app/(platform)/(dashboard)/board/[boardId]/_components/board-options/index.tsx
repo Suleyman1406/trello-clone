@@ -43,7 +43,10 @@ const BoardOptions = ({ id }: IBoardOptionsProps) => {
         <Button
           variant="ghost"
           onClick={() => {
-            execute({ id });
+            const promise = execute({ id });
+            toast.promise(promise, {
+              loading: "Delete board loading...",
+            });
           }}
           disabled={isLoading}
           className="rounded-none w-full h-auto p-2 px-5 font-normal text-sm justify-start"

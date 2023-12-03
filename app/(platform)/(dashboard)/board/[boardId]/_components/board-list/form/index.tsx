@@ -51,7 +51,10 @@ const ListForm = () => {
     const title = formData.get("title") as string;
     const boardId = formData.get("boardId") as string;
 
-    execute({ title, boardId });
+    const promise = execute({ title, boardId });
+    toast.promise(promise, {
+      loading: "Create list loading...",
+    });
   };
 
   useEventListener("keydown", onKeyDown);
