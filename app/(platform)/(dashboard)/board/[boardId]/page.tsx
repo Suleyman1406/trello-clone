@@ -38,7 +38,7 @@ const BoardIdPage = async ({ params }: IBoardIdPageProps) => {
 
   return (
     <div className="p-4 h-full overflow-x-auto">
-      <ListContainer boardId={boardId} data={lists} />
+      <ListContainer data={lists} />
     </div>
   );
 };

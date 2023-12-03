@@ -46,7 +46,6 @@ const ListHeader = ({ data, onAddCard }: IListHeaderProps) => {
     if (title === data.title) {
       return disableEditing();
     }
-    console.log(execute);
 
     execute({ title, listId: data.id });
   };
