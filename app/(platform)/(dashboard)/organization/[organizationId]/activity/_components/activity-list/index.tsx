@@ -17,7 +17,7 @@ const ActivityList = async () => {
   });
 
   return (
-    <ol className="space-y-4 mt-4">
+    <ol className="space-y-4 mt-4 pb-6">
       <p className="hidden last:block text-xs text-center">
         No activity found inside this organization.
       </p>

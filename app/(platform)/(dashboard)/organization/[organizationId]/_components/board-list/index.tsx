@@ -2,6 +2,7 @@ import FormPopover from "@/components/form/form-popover";
 import Hint from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/db";
+import { getAvailableCount } from "@/lib/org-limit";
 import { auth } from "@clerk/nextjs";
 import { HelpCircle, User2 } from "lucide-react";
 import Link from "next/link";
@@ -23,6 +24,8 @@ const BoardList = async () => {
       createdAt: "desc",
     },
   });
+
+  const availableCount = await getAvailableCount();
 
   return (
     <div className="space-y-4">
@@ -48,7 +51,7 @@ const BoardList = async () => {
             role="button"
           >
             <p className="text-sm">Create new board</p>
-            <span className="text-sm">5 remaining</span>
+            <span className="text-sm">{`${availableCount} remaining`}</span>
             <Hint
               side="bottom"
               sideOffset={40}
