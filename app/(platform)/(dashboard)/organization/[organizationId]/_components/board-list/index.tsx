@@ -3,6 +3,7 @@ import Hint from "@/components/hint";
 import { Skeleton } from "@/components/ui/skeleton";
 import { db } from "@/lib/db";
 import { getAvailableCount } from "@/lib/org-limit";
+import { checkSubscription } from "@/lib/subscription";
 import { auth } from "@clerk/nextjs";
 import { HelpCircle, User2 } from "lucide-react";
 import Link from "next/link";
@@ -26,7 +27,7 @@ const BoardList = async () => {
   });
 
   const availableCount = await getAvailableCount();
-
+  const isPro = await checkSubscription();
   return (
     <div className="space-y-4">
       <div className="flex items-center font-semibold text-lg text-neutral-700">
@@ -51,7 +52,9 @@ const BoardList = async () => {
             role="button"
           >
             <p className="text-sm">Create new board</p>
-            <span className="text-sm">{`${availableCount} remaining`}</span>
+            <span className="text-sm">
+              {isPro ? "Unlimited" : `${availableCount} remaining`}
+            </span>
             <Hint
               side="bottom"
               sideOffset={40}
