@@ -59,7 +59,7 @@ const handler = async (data: InputType): Promise<ReturnType> => {
       },
     });
 
-    increaseAvailableCount();
+    if (!isPro) increaseAvailableCount();
     await createAuditLog({
       action: ACTION.CREATE,
       entityId: board.id,
